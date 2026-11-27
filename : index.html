@@ -1,0 +1,429 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>المصحف الشريف | نور القلوب</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#091b13;color:#fff;
+ font-family:'Cairo',sans-serif;
+}
+button,input,select{font-family:inherit}
+button{cursor:pointer}
+:root{--gold:#d9b76e;--green:#143c2b}
+header{
+ text-align:center;padding:18px;
+ background:linear-gradient(120deg,#10291e,#20543b);
+ border-bottom:2px solid var(--gold);
+}
+header h1{
+ font-family:'Noto Naskh Arabic',serif;
+ color:var(--gold);font-size:30px;margin:0;
+}
+header p{font-size:12px;color:#e5d5ae;margin:0}
+#cover{
+ position:fixed;inset:0;z-index:20;
+ background:radial-gradient(circle,#24563d,#06150e);
+ display:flex;flex-direction:column;
+ justify-content:center;align-items:center;
+ transition:1s;padding:15px;
+}
+.book-cover{
+ width:280px;height:410px;max-height:65vh;
+ background:linear-gradient(110deg,#082719,#286344,#09291c);
+ border:5px double var(--gold);
+ border-radius:8px 20px 20px 8px;
+ box-shadow:12px 15px 35px #000;
+ display:flex;align-items:center;justify-content:center;
+ position:relative;text-align:center;
+}
+.book-cover:before{
+ content:"";position:absolute;inset:13px;
+ border:2px solid var(--gold);
+ outline:1px solid #b39453;outline-offset:5px;
+}
+.cover-content{position:relative;padding:20px}
+.cover-content .ornament{font-size:55px;color:var(--gold)}
+.cover-content h2{
+ color:#f0d69b;font-family:'Noto Naskh Arabic',serif;
+ font-size:36px;margin:10px 0;
+}
+.cover-content p{color:#e8d5a7}
+.open-button{
+ margin-top:28px;padding:14px 35px;
+ border:1px solid var(--gold);border-radius:30px;
+ background:var(--gold);color:#142a1c;
+ font-weight:bold;font-size:17px;
+}
+#cover.opening{opacity:0;transform:scale(1.4);pointer-events:none}
+.toolbar{
+ display:flex;flex-wrap:wrap;justify-content:center;
+ gap:8px;padding:14px;
+}
+.toolbar button,.toolbar select,.toolbar input{
+ background:#173b2b;color:white;
+ border:1px solid var(--gold);
+ border-radius:9px;padding:10px;
+}
+.toolbar input{width:145px}
+.toolbar button:hover{background:#315e43}
+#status{text-align:center;color:var(--gold);padding:8px;font-size:13px}
+#lastRead{text-align:center;color:#d8c394;font-size:13px}
+#reader{max-width:800px;margin:12px auto;padding:10px}
+.paper{
+ background:#fff9e9;color:#30271b;
+ border:7px double #ad8b4b;
+ border-radius:7px;
+ padding:20px;
+ min-height:450px;
+ box-shadow:0 10px 30px #0008;
+}
+.surah-name{
+ text-align:center;
+ color:#8b692f;
+ font-family:'Noto Naskh Arabic',serif;
+ font-size:29px;font-weight:700;
+ border-bottom:1px solid #d5bd87;
+ padding-bottom:12px;
+}
+.bismillah{
+ text-align:center;
+ font-family:'Noto Naskh Arabic',serif;
+ font-size:27px;color:#8c6c34;
+ margin:15px 0;
+}
+#verses{
+ font-family:'Noto Naskh Arabic',serif;
+ font-size:27px;font-weight:500;
+ line-height:2.2;
+ text-align:justify;
+ color:#30271b;
+}
+.ayah{display:inline}
+.ayah-num{
+ color:#a27b32;white-space:nowrap;
+ font-size:20px;padding:0 4px;
+}
+.page-footer{
+ display:flex;justify-content:space-between;
+ border-top:1px solid #d5bd87;
+ margin-top:20px;padding-top:10px;
+ color:#8b692f;font-size:12px;
+}
+.navigation{
+ display:flex;justify-content:center;
+ gap:12px;padding:15px;
+}
+.navigation button{
+ border:0;border-radius:10px;
+ background:var(--gold);color:#142a1c;
+ padding:12px 24px;font-weight:bold;
+}
+.section{
+ max-width:800px;margin:15px auto;padding:12px;
+ display:grid;grid-template-columns:1fr 1fr;gap:10px;
+}
+.card{
+ background:#173b2b;border:1px solid #9e814b;
+ border-radius:12px;padding:15px;text-align:center;
+}
+.card button{
+ background:none;color:#e9d39f;
+ border:0;font-size:16px;
+}
+#surahList{
+ max-width:800px;margin:15px auto;padding:10px;
+ display:none;
+ grid-template-columns:repeat(2,1fr);gap:7px;
+}
+.surah-item{
+ background:#183b2b;border:1px solid #997a43;
+ color:#fff;border-radius:8px;padding:10px;
+}
+#azkar{
+ display:none;text-align:center;padding:20px;
+ color:#e8d5a7;line-height:2.2;
+ font-family:'Noto Naskh Arabic',serif;
+ font-size:23px;
+}
+body.light{background:#e9e2ce;color:#24372b}
+body.light header{background:#d8c79d}
+body.light .toolbar button,body.light .toolbar select{
+ background:#fff3d5;color:#34291a;
+}
+footer{text-align:center;color:#cdb783;padding:20px;font-size:12px}
+@media(max-width:500px){
+ #verses{font-size:24px;line-height:2.1}
+ .paper{padding:13px;min-height:420px}
+ .book-cover{height:380px}
+}
+</style>
+</head>
+
+<body>
+
+<div id="cover">
+ <div class="book-cover">
+  <div class="cover-content">
+   <div class="ornament">۞</div>
+   <h2>القرآن الكريم</h2>
+   <p>المصحف الشريف</p>
+   <div style="color:#d9b76e;font-size:32px">﷽</div>
+   <p>نُورٌ وَهُدًى وَرَحْمَةٌ</p>
+   <div class="ornament">۞</div>
+  </div>
+ </div>
+ <button class="open-button" onclick="openCover()">افتح المصحف الشريف ☪</button>
+</div>
+
+<header>
+ <h1>☪ المصحف الشريف ☪</h1>
+ <p>كتاب الله نور القلوب</p>
+</header>
+
+<div class="toolbar">
+ <button onclick="showSurahs()">📚 فهرس السور</button>
+ <select id="surahSelect" onchange="loadSurah(this.value)">
+  <option>جاري التحميل...</option>
+ </select>
+ <input id="search" placeholder="ابحث عن سورة">
+ <button onclick="searchSurah()">بحث</button>
+ <button onclick="changeFont(2)">A+</button>
+ <button onclick="changeFont(-2)">A-</button>
+ <button onclick="toggleBirds()">🐦 العصافير</button>
+ <button onclick="toggleAudio()">▶ التلاوة</button>
+ <button onclick="stopAudio()">⏸ إيقاف</button>
+ <button onclick="toggleTheme()">🌙 الوضع</button>
+</div>
+
+<div id="status">جاري تحميل القرآن الكريم...</div>
+<div id="lastRead"></div>
+
+<div id="surahList"></div>
+
+<main id="reader">
+ <div class="paper">
+  <div class="surah-name" id="surahTitle">المصحف الشريف</div>
+  <div class="bismillah" id="bismillah">
+   بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+  </div>
+  <div id="verses">جاري تحميل الآيات...</div>
+  <div class="page-footer">
+   <span id="pageNumber">الصفحة 1</span>
+   <span>المصحف الشريف</span>
+  </div>
+ </div>
+</main>
+
+<div class="navigation">
+ <button onclick="prevPage()">❮ السابقة</button>
+ <button onclick="nextPage()">التالية ❯</button>
+</div>
+
+<div class="section">
+ <div class="card">
+  <button onclick="resumeRead()">📖 متابعة آخر قراءة</button>
+ </div>
+ <div class="card">
+  <button onclick="showAzkar()">🌙 الأذكار</button>
+ </div>
+ <div class="card">
+  <button onclick="toggleBirds()">🐦 تشغيل العصافير</button>
+ </div>
+ <div class="card">
+  <button onclick="toggleAudio()">🎧 استمع للقرآن</button>
+ </div>
+</div>
+
+<div id="azkar">
+ <h2>أذكار يومية</h2>
+ <p>سُبْحَانَ اللَّهِ وَبِحَمْدِهِ</p>
+ <p>أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ</p>
+ <p>لَا إِلَهَ إِلَّا اللَّهُ</p>
+ <p>اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ</p>
+</div>
+
+<footer>
+ اللهم اجعل القرآن ربيع قلوبنا ونور صدورنا ☪
+</footer>
+
+<script>
+const API='https://api.alquran.cloud/v1';
+let surahs=[],verses=[],audioList=[];
+let current=1,page=0,fontSize=27;
+let audio=new Audio(),playing=false,audioIndex=0;
+let birds=false,ctx=null,birdTimer=null;
+const perPage=8;
+
+function openCover(){
+ document.getElementById('cover').classList.add('opening');
+ setTimeout(()=>document.getElementById('cover').style.display='none',950);
+}
+
+async function init(){
+ try{
+  let r=await fetch(API+'/surah');
+  let j=await r.json();
+  surahs=j.data;
+  document.getElementById('surahSelect').innerHTML=
+   surahs.map(s=>`<option value="${s.number}">${s.number} - ${s.name}</option>`).join('');
+  let saved=JSON.parse(localStorage.getItem('lastQuran')||'null');
+  await loadSurah(saved?saved.surah:1,saved?saved.page:0);
+ }catch(e){
+  statusText('تعذر الاتصال بالإنترنت. أعد تحميل الموقع.');
+ }
+}
+
+function statusText(t){
+ document.getElementById('status').textContent=t;
+}
+
+async function loadSurah(n,p=0){
+ stopAudio();
+ current=Number(n);
+ try{
+  statusText('جاري تحميل السورة...');
+  let results=await Promise.all([
+   fetch(API+'/surah/'+current+'/quran-uthmani').then(r=>r.json()),
+   fetch(API+'/surah/'+current+'/ar.alafasy').then(r=>r.json())
+  ]);
+  verses=results[0].data.ayahs;
+  audioList=results[1].data.ayahs;
+  page=Math.min(p,Math.floor((verses.length-1)/perPage));
+  document.getElementById('surahSelect').value=current;
+  render();
+  statusText('تم تحميل السورة بنجاح');
+ }catch(e){
+  statusText('حدث خطأ في التحميل. تحقق من الإنترنت.');
+ }
+}
+
+function render(){
+ let s=surahs[current-1];
+ let items=verses.slice(page*perPage,(page+1)*perPage);
+ document.getElementById('surahTitle').textContent='سورة '+s.name;
+ document.getElementById('bismillah').style.display=
+ (current===1||current===9)?'none':'block';
+
+ document.getElementById('verses').innerHTML=
+ items.map(v=>`<span class="ayah">${v.text}
+ <span class="ayah-num">۞ ${v.numberInSurah}</span></span> `).join('');
+
+ document.getElementById('verses').style.fontSize=fontSize+'px';
+ document.getElementById('pageNumber').textContent=
+ 'الصفحة '+(page+1)+' من '+Math.ceil(verses.length/perPage);
+
+ localStorage.setItem('lastQuran',JSON.stringify({
+  surah:current,page:page
+ }));
+ document.getElementById('lastRead').textContent=
+ 'آخر قراءة: سورة '+s.name+' - الصفحة '+(page+1);
+}
+
+function nextPage(){
+ if(page<Math.ceil(verses.length/perPage)-1){
+  page++;render();
+ }else if(current<114)loadSurah(current+1);
+}
+function prevPage(){
+ if(page>0){page--;render();}
+ else if(current>1)loadSurah(current-1);
+}
+function changeFont(n){
+ fontSize=Math.max(18,Math.min(40,fontSize+n));
+ document.getElementById('verses').style.fontSize=fontSize+'px';
+}
+function showSurahs(){
+ let box=document.getElementById('surahList');
+ box.style.display=box.style.display==='grid'?'none':'grid';
+ box.innerHTML=surahs.map(s=>
+ `<button class="surah-item" onclick="loadSurah(${s.number});document.getElementById('surahList').style.display='none'">
+ ${s.number}. ${s.name}</button>`).join('');
+}
+function searchSurah(){
+ let q=document.getElementById('search').value.trim();
+ let s=surahs.find(x=>x.name.includes(q)||String(x.number)===q);
+ if(s)loadSurah(s.number);
+ else statusText('لم يتم العثور على السورة');
+}
+function resumeRead(){
+ let s=JSON.parse(localStorage.getItem('lastQuran')||'null');
+ if(s)loadSurah(s.surah,s.page);
+}
+function toggleTheme(){
+ document.body.classList.toggle('light');
+}
+function toggleAudio(){
+ if(playing){stopAudio();return;}
+ audioIndex=page*perPage;
+ playNext();
+}
+function playNext(){
+ if(audioIndex>=audioList.length){
+  playing=false;return;
+ }
+ playing=true;
+ let item=audioList[audioIndex];
+ audio.src=item.audio;
+ audio.play().catch(()=>{
+  playing=false;
+  statusText('اضغط زر التلاوة مرة أخرى لتشغيل الصوت');
+ });
+ audio.onended=()=>{
+  audioIndex++;
+  if(playing)playNext();
+ };
+}
+function stopAudio(){
+ playing=false;
+ audio.pause();
+ audio.currentTime=0;
+ audio.onended=null;
+}
+function showAzkar(){
+ let a=document.getElementById('azkar');
+ a.style.display=a.style.display==='none'?'block':'none';
+}
+function toggleBirds(){
+ if(birds){stopBirds();return;}
+ try{
+  ctx=new (window.AudioContext||window.webkitAudioContext)();
+  ctx.resume();
+  birds=true;
+  birdTimer=setInterval(chirp,1700);
+  chirp();
+  statusText('تم تشغيل مؤثرات العصافير');
+ }catch(e){statusText('الصوت غير مدعوم');}
+}
+function chirp(){
+ if(!birds||!ctx)return;
+ let now=ctx.currentTime;
+ for(let i=0;i<3;i++){
+  let o=ctx.createOscillator();
+  let g=ctx.createGain();
+  o.type='sine';
+  o.frequency.setValueAtTime(2200+i*300,now+i*.15);
+  o.frequency.exponentialRampToValueAtTime(3000,now+i*.15+.1);
+  g.gain.setValueAtTime(.0001,now+i*.15);
+  g.gain.exponentialRampToValueAtTime(.025,now+i*.15+.02);
+  g.gain.exponentialRampToValueAtTime(.0001,now+i*.15+.12);
+  o.connect(g);g.connect(ctx.destination);
+  o.start(now+i*.15);o.stop(now+i*.15+.13);
+ }
+}
+function stopBirds(){
+ birds=false;
+ clearInterval(birdTimer);
+ if(ctx){ctx.close();ctx=null;}
+ statusText('تم إيقاف مؤثرات العصافير');
+}
+init();
+</script>
+</body>
+</html>
